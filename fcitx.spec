@@ -5,7 +5,7 @@
 %define prerelease 1
 
 %if %prerelease
-%define pre_version 070403
+%define pre_version 070507
 %define release	%mkrel -c %{pre_version} %{rel}
 %else
 %define release %mkrel %{rel}
@@ -19,7 +19,7 @@ License:	GPL
 Group:		System/Internationalization
 URL:		http://www.fcitx.org/
 %if %prerelease
-Source0:	%{name}-%{version}-%{pre_version}.tar.bz2
+Source0:	%{name}-%{pre_version}.tar.bz2
 %else
 Source0:	%{name}-%{version}.tar.bz2
 %endif
@@ -66,5 +66,3 @@ rm -rf %{buildroot}
 %attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm doc/*.odt
 %{_bindir}/*
 %{_datadir}/%{name}
-
-
