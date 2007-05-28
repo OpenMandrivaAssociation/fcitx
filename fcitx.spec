@@ -5,7 +5,7 @@
 %define prerelease 1
 
 %if %prerelease
-%define pre_version 070507
+%define pre_version 070527
 %define release	%mkrel -c %{pre_version} %{rel}
 %else
 %define release %mkrel %{rel}
@@ -19,7 +19,7 @@ License:	GPL
 Group:		System/Internationalization
 URL:		http://www.fcitx.org/
 %if %prerelease
-Source0:	%{name}-%{pre_version}.tar.bz2
+Source0:	%{name}-%{version}-%{pre_version}.tar.bz2
 %else
 Source0:	%{name}-%{version}.tar.bz2
 %endif
@@ -28,11 +28,7 @@ Patch1:		%{name}-3.2-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake1.8
 BuildRequires:	gettext-devel
-%if %mdkversion < 200700
-BuildRequires:	XFree86-devel
-%else
 BuildRequires:	X11-devel
-%endif
 Requires:	locales-zh
 
 %description
