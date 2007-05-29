@@ -5,7 +5,7 @@
 %define prerelease 1
 
 %if %prerelease
-%define pre_version 070527
+%define pre_version 070528
 %define release	%mkrel -c %{pre_version} %{rel}
 %else
 %define release %mkrel %{rel}
