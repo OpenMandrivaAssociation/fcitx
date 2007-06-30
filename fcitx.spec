@@ -5,7 +5,7 @@
 %define prerelease 1
 
 %if %prerelease
-%define pre_version 070528
+%define pre_version 070630
 %define release	%mkrel -c %{pre_version} %{rel}
 %else
 %define release %mkrel %{rel}
@@ -26,7 +26,7 @@ Source0:	%{name}-%{version}.tar.bz2
 Source1:	%{name}.README.bz2
 Patch1:		%{name}-3.2-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	automake1.8
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	X11-devel
 Requires:	locales-zh
