@@ -37,7 +37,7 @@ characters in X environment following XIM standard.
 
 %prep
 %setup -q
-aclocal-1.9 
+aclocal 
 %patch1 -p0 -b .mainwin-position
 
 chmod 0644 doc/*
