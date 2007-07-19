@@ -1,11 +1,12 @@
 %define	version	3.5
 %define rel 1
+%define codename BlackFri
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
-%define prerelease 1
+%define prerelease 0
 
 %if %prerelease
-%define pre_version 070703
+%define pre_version 070713
 %define release	%mkrel -c %{pre_version} %{rel}
 %else
 %define release %mkrel %{rel}
@@ -17,12 +18,8 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Group:		System/Internationalization
-URL:		http://www.fcitx.org/
-%if %prerelease
-Source0:	%{name}-%{version}-%{pre_version}.tar.bz2
-%else
-Source0:	%{name}-%{version}.tar.bz2
-%endif
+URL:		http://fcitx.redv.com
+Source0:	%{name}-%{version}-%{codename}.tar.bz2
 Source1:	%{name}.README.bz2
 Patch1:		%{name}-3.2-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
