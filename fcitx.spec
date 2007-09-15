@@ -41,7 +41,7 @@ chmod 0644 doc/*
 
 %configure2_5x
 
-bzcat %{SOURCE1} > README.mandrake
+bzcat %{SOURCE1} > README.mandriva
 
 %build
 %make
@@ -55,7 +55,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README.mandrake
+%doc README.mandriva
 %attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm doc/*.odt
 %{_bindir}/*
 %{_datadir}/%{name}
