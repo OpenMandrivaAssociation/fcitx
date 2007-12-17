@@ -22,7 +22,6 @@ URL:		http://fcitx.redv.com
 Source0:	%{name}-%{version}-%{codename}.tar.bz2
 Source1:	%{name}.README.bz2
 Patch1:		%{name}-3.2-winposition.patch
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	X11-devel
