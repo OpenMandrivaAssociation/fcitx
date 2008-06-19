@@ -1,5 +1,5 @@
 %define	version	3.5
-%define rel 1
+%define rel 2
 %define codename BlackFri
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
@@ -21,11 +21,12 @@ Group:		System/Internationalization
 URL:		http://fcitx.redv.com
 Source0:	%{name}-%{version}-%{codename}.tar.bz2
 Source1:	%{name}.README.bz2
+Patch0:		fcitx-3.5-fix-asneeded.patch
 Patch1:		%{name}-3.2-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	X11-devel
+BuildRequires:	libx11-devel libxft-devel xpm-devel
 Requires:	locales-zh
 
 %description
@@ -34,16 +35,15 @@ characters in X environment following XIM standard.
 
 %prep
 %setup -q
-aclocal 
+%patch0 -p1
 %patch1 -p0 -b .mainwin-position
+bzcat %{SOURCE1} > README.mandriva
 
 chmod 0644 doc/*
 
-%configure2_5x
-
-bzcat %{SOURCE1} > README.mandriva
-
 %build
+sh autogen.sh
+%configure2_5x
 %make
 
 %install
