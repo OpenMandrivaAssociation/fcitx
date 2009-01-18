@@ -39,6 +39,7 @@ characters in X environment following XIM standard.
 %patch1 -p0 -b .mainwin-position
 
 %build
+./autogen.sh
 %configure2_5x
 %make
 
