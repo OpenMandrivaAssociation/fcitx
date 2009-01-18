@@ -1,15 +1,16 @@
-%define	version	3.5
-%define rel 2
+%define	version	3.6.0
+%define rel 1
 %define codename BlackFri
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
-%define prerelease 0
+%define prerelease rc
 
 %if %prerelease
-%define pre_version 070713
-%define release	%mkrel -c %{pre_version} %{rel}
+%define release	%mkrel -c %{prerelease} %{rel}
+%define tarballver %version-%prerelease
 %else
 %define release %mkrel %{rel}
+%define tarballver %version
 %endif
 
 Summary:	Fcitx - Free Chinese Input Toys for X
@@ -18,11 +19,10 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Group:		System/Internationalization
-URL:		http://fcitx.redv.com
-Source0:	%{name}-%{version}-%{codename}.tar.bz2
-Source1:	%{name}.README.bz2
+URL:		http://code.google.com/p/fcitx/
+Source0:	http://fcitx.googlecode.com/files/%name-%tarballver.tar.bz2
 Patch0:		fcitx-3.5-fix-asneeded.patch
-Patch1:		%{name}-3.2-winposition.patch
+Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -34,15 +34,11 @@ Requires:	locales-zh
 characters in X environment following XIM standard.
 
 %prep
-%setup -q
+%setup -q -n %name-%tarballver
 %patch0 -p1
 %patch1 -p0 -b .mainwin-position
-bzcat %{SOURCE1} > README.mandriva
-
-chmod 0644 doc/*
 
 %build
-sh autogen.sh
 %configure2_5x
 %make
 
@@ -55,7 +51,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README.mandriva
 %attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm doc/*.odt
 %{_bindir}/*
 %{_datadir}/%{name}
