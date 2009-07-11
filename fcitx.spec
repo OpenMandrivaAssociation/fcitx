@@ -26,7 +26,7 @@ Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	libx11-devel libxft-devel xpm-devel
+BuildRequires:	libx11-devel libxft-devel xpm-devel libxext-devel
 Requires:	locales-zh
 
 %description
