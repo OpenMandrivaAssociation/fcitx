@@ -3,7 +3,7 @@
 %define codename BlackFri
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
-%define prerelease rc
+%define prerelease 0
 
 %if %prerelease
 %define release	%mkrel -c %{prerelease} %{rel}
@@ -19,9 +19,9 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Group:		System/Internationalization
-URL:		http://code.google.com/p/fcitx/
-Source0:	http://fcitx.googlecode.com/files/%name-%tarballver.tar.bz2
-Patch0:		fcitx-3.5-fix-asneeded.patch
+URL:		http://www.fcitx.org
+Source0:	http://www.fcitx.org/download/%name-3.6.tar.bz2
+Patch0:		fcitx-3.6-fix-asneeded.patch
 Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
@@ -34,7 +34,7 @@ Requires:	locales-zh
 characters in X environment following XIM standard.
 
 %prep
-%setup -q -n %name-%tarballver
+%setup -q -n %name-3.6
 %patch0 -p1
 %patch1 -p0 -b .mainwin-position
 
