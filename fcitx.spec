@@ -1,4 +1,4 @@
-%define	version	3.6.0
+%define	version	3.6.1
 %define rel 1
 %define codename BlackFri
 
