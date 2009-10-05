@@ -22,6 +22,7 @@ URL:		http://code.google.com/p/fcitx/
 Source0:	http://fcitx.googlecode.com/files/%name-%version.tar.bz2
 Patch0:		fcitx-3.6-fix-asneeded.patch
 Patch1:		fcitx-3.6.0-winposition.patch
+Patch2:		fcitx-3.6.1-r256.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -36,6 +37,7 @@ characters in X environment following XIM standard.
 %setup -q -n %name-%version
 %patch0 -p1
 %patch1 -p0 -b .mainwin-position
+%patch2 -p0
 
 %build
 ./autogen.sh
