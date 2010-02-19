@@ -26,6 +26,7 @@ Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	libx11-devel libxft-devel xpm-devel libxext-devel
+BuildRequires:	dbus-devel
 Requires:	locales-zh
 
 %description
@@ -51,6 +52,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm doc/*.odt
+%attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm
 %{_bindir}/*
 %{_datadir}/%{name}
