@@ -1,4 +1,4 @@
-%define	version	3.6.2
+%define	version	3.6.3
 %define rel 1
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
@@ -20,7 +20,7 @@ License:	GPL
 Group:		System/Internationalization
 URL:		http://code.google.com/p/fcitx/
 Source0:	http://fcitx.googlecode.com/files/%name-%version.tar.bz2
-Patch0:		fcitx-3.6-fix-asneeded.patch
+Patch0:		fcitx-3.6.3-fix-asneeded.patch
 Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
