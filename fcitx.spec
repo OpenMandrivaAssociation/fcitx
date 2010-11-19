@@ -1,4 +1,4 @@
-%define	version	3.6.3
+%define	version 4.0.0
 %define rel 1
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
@@ -19,7 +19,7 @@ Release:	%{release}
 License:	GPL
 Group:		System/Internationalization
 URL:		http://code.google.com/p/fcitx/
-Source0:	http://fcitx.googlecode.com/files/%name-%version.tar.bz2
+Source0:	http://fcitx.googlecode.com/files/%name-%{version}_all.tar.gz
 Patch0:		fcitx-3.6.3-fix-asneeded.patch
 Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -35,11 +35,11 @@ characters in X environment following XIM standard.
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p1
-%patch1 -p0 -b .mainwin-position
+#%patch0 -p1
+#%patch1 -p0 -b .mainwin-position
 
 %build
-./autogen.sh
+#./autogen.sh
 %configure2_5x
 %make
 
