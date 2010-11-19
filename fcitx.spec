@@ -20,38 +20,59 @@ License:	GPL
 Group:		System/Internationalization
 URL:		http://code.google.com/p/fcitx/
 Source0:	http://fcitx.googlecode.com/files/%name-%{version}_all.tar.gz
-Patch0:		fcitx-3.6.3-fix-asneeded.patch
-Patch1:		fcitx-3.6.0-winposition.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	libx11-devel libxft-devel xpm-devel libxext-devel
+BuildRequires:	libx11-devel
+BuildRequires:	libxft-devel
+BuildRequires:	xpm-devel
+BuildRequires:	libxext-devel
 BuildRequires:	dbus-devel
+BuildRequires:	wget
+BuildRequires:	cairo-devel
+BuildRequires:	pango-devel
+BuildRequires:	intltool
 Requires:	locales-zh
 
 %description
 %{name} is an X input method allowing people to enter simplified Chinese
 characters in X environment following XIM standard.
 
+%package devel
+Summary: fcitx development library
+Group: Development/C
+Requires: %{name} = %{version}
+
+%description devel
+fcitx development files.
+
 %prep
 %setup -q -n %name-%version
-#%patch0 -p1
-#%patch1 -p0 -b .mainwin-position
 
 %build
-#./autogen.sh
-%configure2_5x
+%configure2_5x --disable-static
 %make
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std
 
+%find_lang %name
+
 %clean
 rm -rf %{buildroot}
 
-%files
+%files -f %name.lang
 %defattr(-,root,root)
 %attr(0644,-,-) %doc doc/*.txt doc/*.pdf doc/*.htm
 %{_bindir}/*
+%{_libdir}/*.so.*
 %{_datadir}/%{name}
+%{_datadir}/pixmaps/*.png
+
+%files devel
+%defattr(-,root,root)
+%{_libdir}/*.so
+%{_libdir}/*.la
+%{_libdir}/pkgconfig/*.pc
+%{_includedir}/*
