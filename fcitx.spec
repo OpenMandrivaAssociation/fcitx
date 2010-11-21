@@ -1,5 +1,5 @@
 %define	version 4.0.0
-%define rel 1
+%define rel 2
 
 # NOTE: set prerelease to 0 for official releases, 1 for pre-releases
 %define prerelease 0
@@ -20,6 +20,7 @@ License:	GPL
 Group:		System/Internationalization
 URL:		http://code.google.com/p/fcitx/
 Source0:	http://fcitx.googlecode.com/files/%name-%{version}_all.tar.gz
+Patch0:		fcitx-4.0.0-r511.patch
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -48,6 +49,7 @@ fcitx development files.
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p0
 
 %build
 %configure2_5x --disable-static
