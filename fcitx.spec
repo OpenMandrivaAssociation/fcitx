@@ -1,6 +1,6 @@
 Name:		fcitx
-Version:	4.2.1
-Release:	%mkrel 1
+Version:	4.2.2
+Release:	1
 Summary:	Fcitx - Free Chinese Input Toys for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -20,6 +20,8 @@ BuildRequires:	pango-devel
 BuildRequires:	intltool
 BuildRequires:	dbus-glib-devel
 BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+3-devel
+
 %if %mdvver >= 201100
 BuildRequires:	opencc-devel
 %endif
@@ -59,19 +61,15 @@ fcitx gtk module.
 
 %build
 #Don't build GTK3 module because we don't have GTK3 yet
-%cmake -DENABLE_GTK2_IM_MODULE=ON -DENABLE_GTK3_IM_MODULE=OFF -DCMAKE_SKIP_RPATH=OFF
+%cmake -DENABLE_GTK2_IM_MODULE=ON -DENABLE_GTK3_IM_MODULE=ON -DCMAKE_SKIP_RPATH=OFF
 %make
 
 %install
-%__rm -rf %{buildroot}
 %makeinstall_std -C build
 
 chrpath -d %{buildroot}%{_libdir}/*.so
 
 %find_lang %{name}
-
-%clean
-%__rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %attr(0644,-,-) %doc doc/*.txt doc/*.htm
@@ -92,4 +90,4 @@ chrpath -d %{buildroot}%{_libdir}/*.so
 
 %files gtk
 %{_libdir}/gtk-2.0/*/immodules/im-fcitx.so
-
+%{_libdir}/gtk-3.0/*/immodules/im-fcitx.so
