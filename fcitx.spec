@@ -1,5 +1,8 @@
+%define api             1.0
+%define oname		fcitx
+
 Name:		fcitx
-Version:	4.2.2
+Version:	4.2.5
 Release:	1
 Summary:	Fcitx - Free Chinese Input Toys for X
 License:	GPLv2
@@ -21,6 +24,7 @@ BuildRequires:	intltool
 BuildRequires:	dbus-glib-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	gtk+3-devel
+BuildRequires:	iso-codes
 
 %if %mdvver >= 201100
 BuildRequires:	opencc-devel
@@ -49,6 +53,17 @@ Requires(postun): gtk+2.0
 
 %description gtk
 fcitx gtk module.
+
+############################
+%define girmajor        1.0
+%define girname         %mklibname %{oname}-gir %{girmajor}
+%package -n %{girname}
+Summary:        GObject Introspection interface description for %{name}
+Group:          System/Libraries
+
+%description -n %{girname}
+GObject Introspection interface description for %{name}.
+
 
 %post gtk
 %{_bindir}/gtk-query-immodules-2.0 > %{_sysconfdir}/gtk-2.0/gtk.immodules.%{_lib}
@@ -81,13 +96,18 @@ chrpath -d %{buildroot}%{_libdir}/*.so
 %{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/x-fskin.xml
 %{_iconsdir}/*/*/*/*
+%{_sysconfdir}/xdg/autostart/%{name}-autostart.desktop
 
 %files devel
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
 %{_datadir}/cmake/%{name}
+%{_datadir}/gir-1.0/Fcitx-%{api}.gir
 
 %files gtk
 %{_libdir}/gtk-2.0/*/immodules/im-fcitx.so
 %{_libdir}/gtk-3.0/*/immodules/im-fcitx.so
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/Fcitx-%{girmajor}.typelib
