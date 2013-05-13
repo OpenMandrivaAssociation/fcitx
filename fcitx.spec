@@ -1,6 +1,6 @@
 Name:		fcitx
 Version:	4.2.2
-Release:	1
+Release:	2
 Summary:	Fcitx - Free Chinese Input Toys for X
 License:	GPLv2
 Group:		System/Internationalization
