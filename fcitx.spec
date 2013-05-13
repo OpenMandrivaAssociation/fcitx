@@ -9,10 +9,10 @@ Source0:	http://fcitx.googlecode.com/files/%{name}-%{version}_dict.tar.xz
 BuildRequires:	automake
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
-BuildRequires:	libx11-devel
-BuildRequires:	libxft-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xft)
 BuildRequires:	xpm-devel
-BuildRequires:	libxext-devel
+BuildRequires:	pkgconfig(xext)
 BuildRequires:	dbus-devel
 BuildRequires:	wget
 BuildRequires:	cairo-devel
