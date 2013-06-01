@@ -9,7 +9,7 @@
 
 Name:		fcitx
 Version:	4.2.7
-Release:	2
+Release:	1
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -24,6 +24,8 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xpm)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(dbus-1)
+BuildRequires:	pkgconfig(iso-codes)
+BuildRequires:	pkgconfig(xkbfile)
 BuildRequires:	wget
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(opencc)
@@ -81,6 +83,8 @@ Tool for configuring fcitx
 Summary:	Common files for the fcitx gtk 2.x and 3.x modules
 Group:		System/Internationalization
 Requires:	%name = %EVRD
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
+BuildRequires:	pkgconfig(dbus-glib-1)
 
 %description gtk
 Common files for the fcitx gtk 2.x and 3.x modules
@@ -90,7 +94,6 @@ Common files for the fcitx gtk 2.x and 3.x modules
 %package gtk2
 Summary:	fcitx gtk 2.x module
 Group:		System/Internationalization
-BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gtk+-x11-2.0)
 Requires:	%name-gtk = %EVRD
 Requires(post):	gtk+2.0
@@ -112,7 +115,6 @@ Summary:	fcitx gtk 3.x module
 Group:		System/Internationalization
 Requires:	%{name} = %{version}
 Requires:	%name-gtk = %EVRD
-BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gtk+-x11-3.0)
 
 %description gtk3
