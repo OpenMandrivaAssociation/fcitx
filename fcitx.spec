@@ -5,11 +5,11 @@
 # Whether or not to build GTK 3.x input module
 %bcond_without gtk3
 # Whether or not to build the Classic UI (not needed with kimpanel)
-%bcond_with classic_ui
+%bcond_without classic_ui
 
 Name:		fcitx
 Version:	4.2.7
-Release:	1
+Release:	2
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -50,7 +50,7 @@ Requires:	%name = %EVRD
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pango)
 
-%description classic_ui
+%description ui
 Classic UI for fcitx.
 
 This is needed if you don't use kimpanel.
@@ -62,6 +62,7 @@ Summary:	fcitx Qt 4.x module
 Group:		System/Internationalization
 Requires:	%{name} = %EVRD
 BuildRequires:	pkgconfig(QtCore) pkgconfig(QtGui) pkgconfig(QtDBus)
+Requires:	plasma-applet-kimpanel plasma-dataengine-kimpanel
 
 %description qt4
 fcitx Qt 4.x module.
@@ -207,7 +208,25 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_datadir/%name/addon/fcitx-xim.conf
 %_datadir/%name/addon/fcitx-xkb.conf
 %_datadir/%name/addon/fcitx-xkbdbus.conf
-%_datadir/%name/configdesc
+%dir %_datadir/%name/configdesc
+%_datadir/%name/configdesc/addon.desc
+%_datadir/%name/configdesc/config.desc
+%_datadir/%name/configdesc/fcitx-autoeng.desc
+%_datadir/%name/configdesc/fcitx-chttrans.desc
+%_datadir/%name/configdesc/fcitx-clipboard.desc
+%_datadir/%name/configdesc/fcitx-imselector.desc
+%_datadir/%name/configdesc/fcitx-keyboard.desc
+%_datadir/%name/configdesc/fcitx-pinyin.desc
+%_datadir/%name/configdesc/fcitx-pinyin-enhance.desc
+%_datadir/%name/configdesc/fcitx-quickphrase.desc
+%_datadir/%name/configdesc/fcitx-spell.desc
+%_datadir/%name/configdesc/fcitx-table.desc
+%_datadir/%name/configdesc/fcitx-unicode.desc
+%_datadir/%name/configdesc/fcitx-xim.desc
+%_datadir/%name/configdesc/fcitx-xkb.desc
+%_datadir/%name/configdesc/inputmethod.desc
+%_datadir/%name/configdesc/profile.desc
+%_datadir/%name/configdesc/table.desc
 %dir %_datadir/%name/data
 %_datadir/%name/data/AutoEng.dat
 %_datadir/%name/data/charselectdata
