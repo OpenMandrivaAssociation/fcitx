@@ -1,30 +1,32 @@
+# Whether or not to build Qt 4.x input module
+%bcond_without qt4
+# Whether or not to build GTK 2.x input module
+%bcond_without gtk2
+# Whether or not to build GTK 3.x input module
+%bcond_without gtk3
+# Whether or not to build the Classic UI (not needed with kimpanel)
+%bcond_with classic_ui
+
 Name:		fcitx
-Version:	4.2.2
-Release:	2
-Summary:	Fcitx - Free Chinese Input Toys for X
+Version:	4.2.7
+Release:	1
+Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
 URL:		http://code.google.com/p/fcitx/
 Source0:	http://fcitx.googlecode.com/files/%{name}-%{version}_dict.tar.xz
+Source100:	%name.rpmlintrc
 BuildRequires:	automake
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xft)
-BuildRequires:	xpm-devel
+BuildRequires:	pkgconfig(xpm)
 BuildRequires:	pkgconfig(xext)
-BuildRequires:	dbus-devel
+BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	wget
-BuildRequires:	cairo-devel
-BuildRequires:	pango-devel
 BuildRequires:	intltool
-BuildRequires:	dbus-glib-devel
-BuildRequires:	gtk+2-devel
-BuildRequires:	gtk+3-devel
-
-%if %mdvver >= 201100
-BuildRequires:	opencc-devel
-%endif
+BuildRequires:	pkgconfig(opencc)
 BuildRequires:	chrpath
 Requires:	locales-zh
 
@@ -40,28 +42,92 @@ Requires:	%{name} = %{version}
 %description devel
 fcitx development files.
 
-%package gtk
-Summary:	fcitx gtk module
+%if %{with classic_ui}
+%package ui
+Summary:	Classic UI for fcitx
 Group:		System/Internationalization
-Requires:	%{name} = %{version}
+Requires:	%name = %EVRD
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(pango)
+
+%description classic_ui
+Classic UI for fcitx.
+
+This is needed if you don't use kimpanel.
+%endif
+
+%if %{with qt4}
+%package qt4
+Summary:	fcitx Qt 4.x module
+Group:		System/Internationalization
+Requires:	%{name} = %EVRD
+BuildRequires:	pkgconfig(QtCore) pkgconfig(QtGui) pkgconfig(QtDBus)
+
+%description qt4
+fcitx Qt 4.x module.
+%endif
+
+%package configtool
+Summary:	Tool for configuring fcitx
+Group:		System/Internationalization
+Requires:	%name = %EVRD
+
+%description configtool
+Tool for configuring fcitx
+
+%if %{with gtk2} || %{with gtk3}
+%package gtk
+Summary:	Common files for the fcitx gtk 2.x and 3.x modules
+Group:		System/Internationalization
+Requires:	%name = %EVRD
+
+%description gtk
+Common files for the fcitx gtk 2.x and 3.x modules
+%endif
+
+%if %{with gtk2}
+%package gtk2
+Summary:	fcitx gtk 2.x module
+Group:		System/Internationalization
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gtk+-x11-2.0)
+Requires:	%name-gtk = %EVRD
 Requires(post):	gtk+2.0
 Requires(postun): gtk+2.0
 
-%description gtk
+%description gtk2
 fcitx gtk module.
 
-%post gtk
+%post gtk2
 %{_bindir}/gtk-query-immodules-2.0 > %{_sysconfdir}/gtk-2.0/gtk.immodules.%{_lib}
 
-%postun gtk
+%postun gtk2
 %{_bindir}/gtk-query-immodules-2.0 > %{_sysconfdir}/gtk-2.0/gtk.immodules.%{_lib}
+%endif
+
+%if %{with gtk3}
+%package gtk3
+Summary:	fcitx gtk 3.x module
+Group:		System/Internationalization
+Requires:	%{name} = %{version}
+Requires:	%name-gtk = %EVRD
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gtk+-x11-3.0)
+
+%description gtk3
+fcitx gtk module.
+%endif
 
 %prep
 %setup -q
 
 %build
-#Don't build GTK3 module because we don't have GTK3 yet
-%cmake -DENABLE_GTK2_IM_MODULE=ON -DENABLE_GTK3_IM_MODULE=ON -DCMAKE_SKIP_RPATH=OFF
+%cmake -DCMAKE_SKIP_RPATH=OFF \
+	-DENABLE_GTK2_IM_MODULE=%{with gtk2} \
+	-DENABLE_GTK3_IM_MODULE=%{with gtk3} \
+	-DENABLE_QT_IM_MODULE=%{with qt4} \
+	-DENABLE_CAIRO=%{with classic_ui} \
+	-DENABLE_PANGO=%{with classic_ui}
 %make
 
 %install
@@ -69,18 +135,116 @@ fcitx gtk module.
 
 chrpath -d %{buildroot}%{_libdir}/*.so
 
+%if %{without classic_ui}
+# Built even without classic_ui... But apparently not needed
+rm -rf %buildroot%_datadir/fcitx/skin
+%endif
+
 %find_lang %{name}
 
 %files -f %{name}.lang
 %attr(0644,-,-) %doc doc/*.txt doc/*.htm
-%{_bindir}/*
-%{_libdir}/*.so.*
-%{_libdir}/%{name}
-%{_datadir}/%{name}
-%{_mandir}/man1/*
-%{_datadir}/applications/*.desktop
-%{_datadir}/mime/packages/x-fskin.xml
-%{_iconsdir}/*/*/*/*
+%_bindir/createPYMB
+%_bindir/fcitx
+%_bindir/fcitx-autostart
+%_bindir/fcitx-dbus-watcher
+%_bindir/fcitx-diagnose
+%_bindir/fcitx-po-parser
+%_bindir/fcitx-remote
+%_bindir/fcitx-scanner
+%_bindir/fcitx4-config
+%_bindir/mb2org
+%_bindir/mb2txt
+%_bindir/readPYBase
+%_bindir/readPYMB
+%_bindir/scel2org
+%_bindir/txt2mb
+%_libdir/libfcitx-config.so.4*
+%_libdir/libfcitx-core.so.0*
+%_libdir/libfcitx-utils.so.0*
+%dir %_libdir/%{name}
+%_libdir/%name/fcitx-autoeng.so
+%_libdir/%name/fcitx-chttrans.so
+%_libdir/%name/fcitx-clipboard.so
+%_libdir/%name/fcitx-dbus.so
+%_libdir/%name/fcitx-fullwidth-char.so
+%_libdir/%name/fcitx-imselector.so
+%_libdir/%name/fcitx-ipc.so
+%_libdir/%name/fcitx-keyboard.so
+%_libdir/%name/fcitx-pinyin-enhance.so
+%_libdir/%name/fcitx-pinyin.so
+%_libdir/%name/fcitx-punc.so
+%_libdir/%name/fcitx-quickphrase.so
+%_libdir/%name/fcitx-qw.so
+%_libdir/%name/fcitx-remote-module.so
+%_libdir/%name/fcitx-spell.so
+%_libdir/%name/fcitx-table.so
+%_libdir/%name/fcitx-unicode.so
+%_libdir/%name/fcitx-x11.so
+%_libdir/%name/fcitx-xim.so
+%_libdir/%name/fcitx-xkb.so
+%_libdir/%name/fcitx-xkbdbus.so
+%dir %_datadir/%name
+%dir %_datadir/%name/addon
+%_datadir/%name/addon/fcitx-autoeng.conf
+%_datadir/%name/addon/fcitx-chttrans.conf
+%_datadir/%name/addon/fcitx-clipboard.conf
+%_datadir/%name/addon/fcitx-dbus.conf
+%_datadir/%name/addon/fcitx-fullwidth-char.conf
+%_datadir/%name/addon/fcitx-imselector.conf
+%_datadir/%name/addon/fcitx-ipc.conf
+%_datadir/%name/addon/fcitx-keyboard.conf
+%_datadir/%name/addon/fcitx-pinyin-enhance.conf
+%_datadir/%name/addon/fcitx-pinyin.conf
+%_datadir/%name/addon/fcitx-punc.conf
+%_datadir/%name/addon/fcitx-quickphrase.conf
+%_datadir/%name/addon/fcitx-qw.conf
+%_datadir/%name/addon/fcitx-remote-module.conf
+%_datadir/%name/addon/fcitx-spell.conf
+%_datadir/%name/addon/fcitx-table.conf
+%_datadir/%name/addon/fcitx-unicode.conf
+%_datadir/%name/addon/fcitx-x11.conf
+%_datadir/%name/addon/fcitx-xim.conf
+%_datadir/%name/addon/fcitx-xkb.conf
+%_datadir/%name/addon/fcitx-xkbdbus.conf
+%_datadir/%name/configdesc
+%dir %_datadir/%name/data
+%_datadir/%name/data/AutoEng.dat
+%_datadir/%name/data/charselectdata
+%_datadir/%name/data/gbks2t.tab
+%_datadir/%name/data/punc.mb.zh_CN
+%_datadir/%name/data/punc.mb.zh_HK
+%_datadir/%name/data/punc.mb.zh_TW
+%_datadir/%name/data/vk.conf
+%dir %_datadir/%name/dbus
+%_datadir/%name/dbus/daemon.conf
+%dir %_datadir/%name/imicon
+%_datadir/%name/imicon/*
+%dir %_datadir/%name/inputmethod
+%_datadir/%name/inputmethod/pinyin.conf
+%_datadir/%name/inputmethod/qw.conf
+%_datadir/%name/inputmethod/shuangpin.conf
+%dir %_datadir/%name/pinyin
+%_datadir/%name/pinyin/*
+%dir %_datadir/%name/py-enhance
+%_datadir/%name/py-enhance/*
+%_mandir/man1/createPYMB.1*
+%_mandir/man1/fcitx-remote.1*
+%_mandir/man1/fcitx.1*
+%_mandir/man1/mb2org.1*
+%_mandir/man1/mb2txt.1*
+%_mandir/man1/readPYBase.1*
+%_mandir/man1/readPYMB.1*
+%_mandir/man1/scel2org.1*
+%_mandir/man1/txt2mb.1*
+%_datadir/applications/fcitx.desktop
+%_datadir/icons/gnome/*/*/fcitx*.*
+%_datadir/icons/hicolor/*/*/fcitx*.*
+%_sysconfdir/xdg/autostart/fcitx-autostart.desktop
+%dir %_datadir/fcitx/spell
+%_datadir/fcitx/spell/*
+%dir %_datadir/fcitx/table
+%_datadir/fcitx/table/*
 
 %files devel
 %{_libdir}/*.so
@@ -88,100 +252,47 @@ chrpath -d %{buildroot}%{_libdir}/*.so
 %{_includedir}/*
 %{_datadir}/cmake/%{name}
 
+%if %{with qt4}
+%files qt4
+%_bindir/fcitx-qt-gui-wrapper
+%_libdir/qt4/plugins/inputmethods/qtim-fcitx.so
+%_libdir/%name/fcitx-kimpanel-ui.so
+%_datadir/%name/addon/fcitx-kimpanel-ui.conf
+%_libdir/%name/qt
+%_libdir/libfcitx-qt.so.0*
+%endif
+
+%if %{with gtk2} || %{with gtk3}
 %files gtk
+%_libdir/girepository-1.0/Fcitx-1.0.typelib
+%_datadir/gir-1.0/Fcitx-1.0.gir
+%_libdir/libfcitx-gclient.so.0*
+%endif
+
+%if %{with gtk2}
+%files gtk2
 %{_libdir}/gtk-2.0/*/immodules/im-fcitx.so
+%endif
+
+%if %{with gtk3}
+%files gtk3
 %{_libdir}/gtk-3.0/*/immodules/im-fcitx.so
+%endif
 
+%if %{with classic_ui}
+%files ui
+%_bindir/fcitx-skin-installer
+%_libdir/fcitx/fcitx-classic-ui.so
+%_libdir/fcitx/fcitx-vk.so
+%_datadir/applications/fcitx-skin-installer.desktop
+%_datadir/fcitx/addon/fcitx-classic-ui.conf
+%_datadir/fcitx/addon/fcitx-vk.conf
+%_datadir/fcitx/configdesc/fcitx-classic-ui.desc
+%_datadir/fcitx/configdesc/skin.desc
+%_datadir/mime/packages/x-fskin.xml
+%_datadir/fcitx/skin
+%endif
 
-%changelog
-* Thu Apr 26 2012 Alexander Khrukin <akhrukin@mandriva.org> 4.2.2-1
-+ Revision: 793520
-- version update 4.2.2
-
-* Tue Mar 20 2012 Andrey Bondrov <abondrov@mandriva.org> 4.2.1-1
-+ Revision: 785795
-- New version 4.2.1
-
-* Mon Oct 10 2011 Andrey Bondrov <abondrov@mandriva.org> 4.1.2-1
-+ Revision: 703989
-- New version 4.1.2, new subpackage gtk, more BR
-
-* Mon Dec 20 2010 Funda Wang <fwang@mandriva.org> 4.0.1-1mdv2011.0
-+ Revision: 623234
-- new version 4.0.1
-
-* Sun Nov 21 2010 Funda Wang <fwang@mandriva.org> 4.0.0-2mdv2011.0
-+ Revision: 599321
-- add two upstream patch to fix problems
-
-* Fri Nov 19 2010 Funda Wang <fwang@mandriva.org> 4.0.0-1mdv2011.0
-+ Revision: 598900
-- new version 4.0.0
-- new version 4.0.0
-
-* Fri Feb 19 2010 Funda Wang <fwang@mandriva.org> 3.6.3-1mdv2010.1
-+ Revision: 507965
-- BR dbus
-- new version 3.6.3
-
-* Fri Nov 06 2009 Funda Wang <fwang@mandriva.org> 3.6.2-1mdv2010.1
-+ Revision: 460569
-- New version 3.6.2
-
-* Mon Oct 05 2009 Funda Wang <fwang@mandriva.org> 3.6.1-2mdv2010.0
-+ Revision: 454166
-- update to svn trunk
-- really use 3.6.1 tarball
-
-* Thu Sep 24 2009 Frederik Himpe <fhimpe@mandriva.org> 3.6.1-1mdv2010.0
-+ Revision: 448396
-- update to new version 3.6.1
-
-* Sat Jul 11 2009 Funda Wang <fwang@mandriva.org> 3.6.0-1mdv2010.0
-+ Revision: 394836
-- BR xext
-- fix linkage
-- new version 3.6.0 final
-
-* Sun Jan 18 2009 Funda Wang <fwang@mandriva.org> 3.6.0-0.rc.1mdv2009.1
-+ Revision: 330812
-- New version 3.6.0 rc
-- rediff winposition patch
-
-* Thu Jun 19 2008 Funda Wang <fwang@mandriva.org> 3.5-2mdv2009.0
-+ Revision: 226418
-- add patch for -asneeded
-- simplify the BR
-
-* Fri Dec 21 2007 Olivier Blin <blino@mandriva.org> 3.5-1mdv2008.1
-+ Revision: 136411
-- restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-    - s/Mandrake/Mandriva/
-
-* Thu Jul 19 2007 Funda Wang <fwang@mandriva.org> 3.5-1mdv2008.0
-+ Revision: 53434
-- New version
-
-* Fri Jul 06 2007 Funda Wang <fwang@mandriva.org> 3.5-0.070703.1mdv2008.0
-+ Revision: 49152
-- New version
-
-* Sun Jul 01 2007 Funda Wang <fwang@mandriva.org> 3.5-0.070630.1mdv2008.0
-+ Revision: 46417
-- New version
-
-* Tue May 29 2007 Funda Wang <fwang@mandriva.org> 3.5-0.070528.1mdv2008.0
-+ Revision: 32415
-- New snapshot
-
-* Mon May 28 2007 Funda Wang <fwang@mandriva.org> 3.5-0.070527.1mdv2008.0
-+ Revision: 31890
-- New version
-
-* Mon May 07 2007 Funda Wang <fwang@mandriva.org> 3.5-0.070507.1mdv2008.0
-+ Revision: 24113
-- New upstream version 070507
-
+%files configtool
+%_bindir/fcitx-configtool
+%_datadir/applications/fcitx-configtool.desktop

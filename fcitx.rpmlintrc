@@ -1,0 +1,2 @@
+# False positive on qt4, gtk2, gtk3 subpackages
+addFilter("incoherent-version-in-name")
