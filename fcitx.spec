@@ -8,13 +8,13 @@
 %bcond_without classic_ui
 
 Name:		fcitx
-Version:	4.2.7
+Version:	4.2.8.1
 Release:	1
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
-URL:		http://code.google.com/p/fcitx/
-Source0:	http://fcitx.googlecode.com/files/%{name}-%{version}_dict.tar.xz
+URL:		http://www.fcitx-im.org/
+Source0:	http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
 Source100:	%name.rpmlintrc
 BuildRequires:	automake
 BuildRequires:	cmake
@@ -152,9 +152,7 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_bindir/fcitx-autostart
 %_bindir/fcitx-dbus-watcher
 %_bindir/fcitx-diagnose
-%_bindir/fcitx-po-parser
 %_bindir/fcitx-remote
-%_bindir/fcitx-scanner
 %_bindir/fcitx4-config
 %_bindir/mb2org
 %_bindir/mb2txt
@@ -170,10 +168,12 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_libdir/%name/fcitx-chttrans.so
 %_libdir/%name/fcitx-clipboard.so
 %_libdir/%name/fcitx-dbus.so
+%_libdir/%name/fcitx-freedesktop-notify.so
 %_libdir/%name/fcitx-fullwidth-char.so
 %_libdir/%name/fcitx-imselector.so
 %_libdir/%name/fcitx-ipc.so
 %_libdir/%name/fcitx-keyboard.so
+%_libdir/%name/fcitx-notificationitem.so
 %_libdir/%name/fcitx-pinyin-enhance.so
 %_libdir/%name/fcitx-pinyin.so
 %_libdir/%name/fcitx-punc.so
@@ -187,16 +187,22 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_libdir/%name/fcitx-xim.so
 %_libdir/%name/fcitx-xkb.so
 %_libdir/%name/fcitx-xkbdbus.so
+%dir %_libdir/%name/libexec
+%_libdir/%name/libexec/comp-spell-dict
+%_libdir/%name/libexec/fcitx-po-parser
+%_libdir/%name/libexec/fcitx-scanner
 %dir %_datadir/%name
 %dir %_datadir/%name/addon
 %_datadir/%name/addon/fcitx-autoeng.conf
 %_datadir/%name/addon/fcitx-chttrans.conf
 %_datadir/%name/addon/fcitx-clipboard.conf
 %_datadir/%name/addon/fcitx-dbus.conf
+%_datadir/%name/addon/fcitx-freedesktop-notify.conf
 %_datadir/%name/addon/fcitx-fullwidth-char.conf
 %_datadir/%name/addon/fcitx-imselector.conf
 %_datadir/%name/addon/fcitx-ipc.conf
 %_datadir/%name/addon/fcitx-keyboard.conf
+%_datadir/%name/addon/fcitx-notificationitem.conf
 %_datadir/%name/addon/fcitx-pinyin-enhance.conf
 %_datadir/%name/addon/fcitx-pinyin.conf
 %_datadir/%name/addon/fcitx-punc.conf
@@ -237,6 +243,9 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_datadir/%name/data/punc.mb.zh_HK
 %_datadir/%name/data/punc.mb.zh_TW
 %_datadir/%name/data/vk.conf
+%dir %_datadir/%name/data/quickphrase.d
+%_datadir/%name/data/quickphrase.d/emoji.mb
+%_datadir/%name/data/quickphrase.d/latex.mb
 %dir %_datadir/%name/dbus
 %_datadir/%name/dbus/daemon.conf
 %dir %_datadir/%name/imicon
@@ -259,7 +268,6 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_mandir/man1/scel2org.1*
 %_mandir/man1/txt2mb.1*
 %_datadir/applications/fcitx.desktop
-%_datadir/icons/gnome/*/*/fcitx*.*
 %_datadir/icons/hicolor/*/*/fcitx*.*
 %_sysconfdir/xdg/autostart/fcitx-autostart.desktop
 %dir %_datadir/fcitx/spell
@@ -275,7 +283,7 @@ rm -rf %buildroot%_datadir/fcitx/skin
 
 %if %{with qt4}
 %files qt4
-%_bindir/fcitx-qt-gui-wrapper
+%_libdir/fcitx/libexec/fcitx-qt-gui-wrapper
 %_libdir/qt4/plugins/inputmethods/qtim-fcitx.so
 %_libdir/%name/fcitx-kimpanel-ui.so
 %_datadir/%name/addon/fcitx-kimpanel-ui.conf
