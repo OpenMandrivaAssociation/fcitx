@@ -1,0 +1,11 @@
+--- fcitx-4.2.8.1/data/config.desc.omv~	2013-09-12 12:08:03.023930068 +0200
++++ fcitx-4.2.8.1/data/config.desc	2013-09-12 12:08:24.095521972 +0200
+@@ -64,7 +64,7 @@ Description=Enable Hotkey to scroll Betw
+ 
+ [Hotkey/IMSwitchIncludeInactive]
+ Type=Boolean
+-DefaultValue=False
++DefaultValue=True
+ Description=Include Inactivate when scrolling between Input Method
+ Advance=True
+ 
