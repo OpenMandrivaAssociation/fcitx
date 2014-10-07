@@ -155,7 +155,6 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_bindir/fcitx-dbus-watcher
 %_bindir/fcitx-diagnose
 %_bindir/fcitx-remote
-%_bindir/fcitx4-config
 %_bindir/mb2org
 %_bindir/mb2txt
 %_bindir/readPYBase
@@ -278,6 +277,7 @@ rm -rf %buildroot%_datadir/fcitx/skin
 %_datadir/fcitx/table/*
 
 %files devel
+%_bindir/fcitx4-config
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
