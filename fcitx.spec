@@ -242,6 +242,7 @@ rm -rf %{buildroot}%{_datadir}/fcitx/skin
 %{_datadir}/%{name}/configdesc/profile.desc
 %{_datadir}/%{name}/configdesc/table.desc
 %dir %{_datadir}/%{name}/data
+%{_datadir}/%{name}/data/*sh
 %{_datadir}/%{name}/data/AutoEng.dat
 %{_datadir}/%{name}/data/charselectdata
 %{_datadir}/%{name}/data/gbks2t.tab
@@ -280,8 +281,6 @@ rm -rf %{buildroot}%{_datadir}/fcitx/skin
 %{_datadir}/fcitx/spell/*
 %dir %{_datadir}/fcitx/table
 %{_datadir}/fcitx/table/*
-%dir %{_datadir}/fcitx/data
-%{_datadir}/fcitx/data/*
 %{_datadir}/dbus-1/services/*service
 
 %files devel
