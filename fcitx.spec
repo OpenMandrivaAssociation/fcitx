@@ -140,6 +140,13 @@ fcitx gtk module.
 
 chrpath -d %{buildroot}%{_libdir}/*.so
 
+# A hack - make install issue?
+mkdir -p %{buildroot}/etc/xdg/autostart/
+mv %{buildroot}/usr/etc/xdg/autostart/* %{buildroot}/etc/xdg/autostart/
+rm -rf %{buildroot}/usr/etcmkdir -p %{buildroot}/etc/xdg/autostart/
+mv %{buildroot}/usr/etc/xdg/autostart/* %{buildroot}/etc/xdg/autostart/
+rm -rf %{buildroot}/usr/etc
+
 %if %{without classic_ui}
 # Built even without classic_ui... But apparently not needed
 rm -rf %{buildroot}%{_datadir}/fcitx/skin
@@ -275,6 +282,9 @@ rm -rf %{buildroot}%{_datadir}/fcitx/skin
 %{_datadir}/fcitx/spell/*
 %dir %{_datadir}/fcitx/table
 %{_datadir}/fcitx/table/*
+%dir %{_datadir}/fcitx/data
+%{_datadir}/fcitx/data/*
+%{_datadir}/dbus-1/services/*service
 
 %files devel
 %{_bindir}/fcitx4-config
