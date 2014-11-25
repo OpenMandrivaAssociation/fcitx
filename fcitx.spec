@@ -143,8 +143,6 @@ chrpath -d %{buildroot}%{_libdir}/*.so
 # A hack - make install issue?
 mkdir -p %{buildroot}/etc/xdg/autostart/
 mv %{buildroot}/usr/etc/xdg/autostart/* %{buildroot}/etc/xdg/autostart/
-rm -rf %{buildroot}/usr/etcmkdir -p %{buildroot}/etc/xdg/autostart/
-mv %{buildroot}/usr/etc/xdg/autostart/* %{buildroot}/etc/xdg/autostart/
 rm -rf %{buildroot}/usr/etc
 
 %if %{without classic_ui}
