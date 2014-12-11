@@ -8,8 +8,8 @@
 %bcond_without classic_ui
 
 Name:		fcitx
-Version:	4.2.8.4
-Release:	9
+Version:	4.2.8.5
+Release:	1
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
