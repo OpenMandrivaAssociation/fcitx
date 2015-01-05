@@ -9,7 +9,7 @@
 
 Name:		fcitx
 Version:	4.2.8.5
-Release:	1
+Release:	2
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -128,6 +128,7 @@ fcitx gtk module.
 
 %build
 %cmake -DCMAKE_SKIP_RPATH=OFF \
+	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DENABLE_GTK2_IM_MODULE=%{with gtk2} \
 	-DENABLE_GTK3_IM_MODULE=%{with gtk3} \
 	-DENABLE_QT_IM_MODULE=%{with qt4} \
