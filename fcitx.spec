@@ -8,7 +8,7 @@
 %bcond_without classic_ui
 
 Name:		fcitx
-Version:	4.2.9
+Version:	4.2.9.1
 Release:	1
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
@@ -65,7 +65,6 @@ Summary:	Fcitx Qt 4.x module
 Group:		System/Internationalization
 Requires:	%{name} = %{EVRD}
 BuildRequires:	pkgconfig(QtCore) pkgconfig(QtGui) pkgconfig(QtDBus)
-Requires:	plasma-applet-kimpanel plasma-dataengine-kimpanel
 
 %description qt4
 fcitx Qt 4.x module.
