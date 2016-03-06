@@ -19,6 +19,7 @@ Source100:	%{name}.rpmlintrc
 Patch0:		fcitx-4.2.8.1-defaults.patch
 BuildRequires:	automake
 BuildRequires:	cmake
+BuildRequires:	cmake(ECM)
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xft)
