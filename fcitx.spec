@@ -23,6 +23,7 @@ BuildRequires:	cmake(ECM)
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xft)
+BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(xpm)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(dbus-1)
