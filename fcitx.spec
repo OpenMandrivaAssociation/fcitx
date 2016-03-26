@@ -9,7 +9,7 @@
 
 Name:		fcitx
 Version:	4.2.9.1
-Release:	1
+Release:	2
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
