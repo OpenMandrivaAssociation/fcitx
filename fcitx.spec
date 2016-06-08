@@ -9,7 +9,7 @@
 
 Name:		fcitx
 Version:	4.2.9.1
-Release:	2
+Release:	3
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -29,6 +29,7 @@ BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(iso-codes)
 BuildRequires:	pkgconfig(xkbfile)
+BuildRequires:	pkgconfig(enchant)
 BuildRequires:	wget
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(opencc)
