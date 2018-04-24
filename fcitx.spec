@@ -30,6 +30,7 @@ BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(iso-codes)
 BuildRequires:	pkgconfig(xkbfile)
 BuildRequires:	pkgconfig(enchant)
+BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	wget
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(opencc)
