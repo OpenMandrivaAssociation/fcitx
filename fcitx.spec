@@ -1,5 +1,5 @@
 # Whether or not to build Qt 4.x input module
-%bcond_without qt4
+%bcond_with qt4
 # Whether or not to build GTK 2.x input module
 %bcond_without gtk2
 # Whether or not to build GTK 3.x input module
@@ -8,8 +8,8 @@
 %bcond_without classic_ui
 
 Name:		fcitx
-Version:	4.2.9.1
-Release:	5
+Version:	4.2.9.6
+Release:	1
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
@@ -136,6 +136,8 @@ export PATH=%_prefix/lib/qt4/bin:$PATH
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DENABLE_GTK2_IM_MODULE=%{with gtk2} \
 	-DENABLE_GTK3_IM_MODULE=%{with gtk3} \
+	-DENABLE_QT=%{with qt4} \
+	-DENABLE_QT_GUI=%{with qt4} \
 	-DENABLE_QT_IM_MODULE=%{with qt4} \
 	-DENABLE_CAIRO=%{with classic_ui} \
 	-DENABLE_PANGO=%{with classic_ui}
@@ -288,8 +290,16 @@ rm -rf %{buildroot}%{_datadir}/fcitx/skin
 %dir %{_datadir}/fcitx/table
 %{_datadir}/fcitx/table/*
 %{_datadir}/dbus-1/services/*service
+%{_libdir}/%{name}/fcitx-kimpanel-ui.so
+%{_datadir}/%{name}/addon/fcitx-kimpanel-ui.conf
+%{_libdir}/%{name}/fcitx-ipcportal.so
+%{_libdir}/libfcitx-gclient.so.1
+%{_datadir}/fcitx/addon/fcitx-ipcportal.conf
+%{_datadir}/fcitx/addon/fcitx-kimpanel-ui.conf
+%{_datadir}/fcitx/data/quickphrase.d/emoji-eac.mb
 
 %files devel
+%doc %{_docdir}/fcitx/Develop_Readme
 %{_bindir}/fcitx4-config
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
@@ -300,8 +310,6 @@ rm -rf %{buildroot}%{_datadir}/fcitx/skin
 %files qt4
 %{_libdir}/fcitx/libexec/fcitx-qt-gui-wrapper
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
-%{_libdir}/%{name}/fcitx-kimpanel-ui.so
-%{_datadir}/%{name}/addon/fcitx-kimpanel-ui.conf
 %{_libdir}/%{name}/qt
 %{_libdir}/libfcitx-qt.so.0*
 %endif
