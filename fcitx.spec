@@ -33,6 +33,7 @@ BuildRequires:	pkgconfig(enchant)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(xkeyboard-config)
+BuildRequires:	pkgconfig(uuid)
 BuildRequires:	wget
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(opencc)
