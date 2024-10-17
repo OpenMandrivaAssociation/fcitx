@@ -13,7 +13,7 @@ Release:	3
 Summary:	Fcitx - Free Chinese Input Tool for X
 License:	GPLv2
 Group:		System/Internationalization
-URL:		http://www.fcitx-im.org/
+URL:		https://www.fcitx-im.org/
 Source0:	http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
 Source100:	%{name}.rpmlintrc
 Patch0:		fcitx-4.2.8.1-defaults.patch
